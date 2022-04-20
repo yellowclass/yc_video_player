@@ -16,9 +16,7 @@ import 'package:yc_video_player/yc_video_player.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-      home: _App(),
-    ),
+    MaterialApp(home: _App()),
   );
 
   // FlutterError.onError = (FlutterErrorDetails details) {
