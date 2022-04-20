@@ -9,8 +9,6 @@
 
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:yc_video_player/yc_video_player.dart';
 
@@ -57,7 +55,8 @@ class _App extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            _ButterFlyAssetVideo(""),
+            _ButterFlyAssetVideo(
+                "https://video.yellowclass.com/_1202_v2_3dmoddeling_robot/hls_session/session_video.m3u8"),
             _ButterFlyRemoteVideoInList(),
           ],
         ),
@@ -132,6 +131,12 @@ class _ButterFlyAssetVideoState extends State<_ButterFlyAssetVideo> {
         ? VideoPlayerController.asset('assets/Butterfly-209.mp4')
         : VideoPlayerController.network(widget.remoteURL);
 
+    _controller.onErrorReceived((videoPlayerError) {
+      debugPrint("\n\n  -----onErrorReceived ----- "
+          "\n-> ${videoPlayerError.errorType.name} "
+          "\n-> ${videoPlayerError.errorDetail} \n\n");
+    }, logVideoState: true);
+
     _controller.addListener(() {
       // setState(() {});
       // print("receiveBroadcastStream-listner->")
@@ -139,12 +144,6 @@ class _ButterFlyAssetVideoState extends State<_ButterFlyAssetVideo> {
     _controller.setLooping(true);
     _controller.initialize().then((_) => setState(() {}));
     _controller.play();
-
-    _controller.onErrorReceived((videoPlayerError) {
-      debugPrint("\n\n  onErrorReceived"
-          "-> ${videoPlayerError.errorType.name} "
-          "-> ${videoPlayerError.errorDetail} \n\n");
-    });
   }
 
   @override
